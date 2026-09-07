@@ -173,22 +173,6 @@ This approach helps in understanding:
 * Bit manipulation
 * Hardware-level firmware operation
 
-## 📈 Learning Progress
-
-| Topic       | Status                    |
-| ----------- | ------------------------- |
-| GPIO        | 🟢 Completed / Practicing |
-| RCC & Clock | 🟡 Learning               |
-| Interrupts  | 🟡 Learning               |
-| Timers      | 🟡 Learning               |
-| UART        | 🟡 Learning               |
-| SPI         | 🟡 Learning               |
-| I2C         | 🟡 Learning               |
-| ADC         | 🟡 Learning               |
-| DMA         | 🟡 Learning               |
-| CAN         | 🟡 Learning               |
-
-This table will be updated as I progress through the topics.
 
 ## 🎓 Learning Resource
 
