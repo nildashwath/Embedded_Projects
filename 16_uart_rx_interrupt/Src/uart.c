@@ -1,0 +1,177 @@
+#include "uart.h"
+
+#define  GPIOAEN		(1U<<0)
+#define  UART2EN		(1U<<17)
+
+#define CR1_TE			(1U<<3)//tx Enable
+#define CR1_RE			(1U<<2)//rx Enable
+#define CR1_UE			(1U<<13)//USART Enable
+#define SR_TXE			(1U<<7)
+#define	CR1_RXNEIE		(1U<<5)
+
+
+
+
+#define SYS_FREQ 		16000000
+#define APB1_CLK		SYS_FREQ
+
+#define UART_BAUDRATE	115200
+
+static void uart_set_baudrate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t BaudRate );
+static uint16_t compute_uart_bd(uint32_t PeriphClk, uint32_t BaudRate);
+
+
+void uart2_write(int ch);
+
+
+int __io_putchar(int ch){
+
+	uart2_write(ch);
+	return ch;
+}
+
+
+void uart2_rxtx_init(void){//
+	/*configure UART gpio pins*/
+	//Enable the clock access to GPIOD
+	RCC->AHB1ENR |= GPIOAEN;
+
+	//Set PA2 mode to alternate function mode
+	GPIOA->MODER &= ~(1U<<4);
+	GPIOA->MODER |= (1U<<5);
+	//Set PA2 alternate function type to UART_Tx(AF7)
+	GPIOA->AFR[0] |=(1U<<8); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<9);
+	GPIOA->AFR[0] |=(1U<<10);
+	GPIOA->AFR[0] &=~(1U<<11);
+
+	//Set PA3 mode to alternate function mode
+	GPIOA->MODER &=~(1U<<6);
+	GPIOA->MODER |= (1U<<7);
+	//Set PA3 alternate function type to UART_Rx(AF7)
+	GPIOA->AFR[0] |=(1U<<12); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<13);
+	GPIOA->AFR[0] |=(1U<<14);
+	GPIOA->AFR[0] &=~(1U<<15);
+	/****************************************************************************************************************/
+	/*Configure the USART module*/
+	//Enable the clock access to uart2
+	RCC->APB1ENR |= UART2EN;
+
+	//configure the UART baud rate
+	uart_set_baudrate(USART2,APB1_CLK, UART_BAUDRATE);
+
+	//configure the transfer direction
+	USART2->CR1 = (CR1_TE | CR1_RE);//here we have not use the OR operator '|' because we need everything zero and only 3rd bit to set
+
+
+	//Enable uart module
+	USART2->CR1 |= CR1_UE;// why | or, We've already configured the TE bit, so we simply want to add the UE bit to the current state of CR1
+
+}
+
+void uart2_rx_interrupt_init(void){//
+	/*configure UART gpio pins*/
+	//Enable the clock access to GPIOD
+	RCC->AHB1ENR |= GPIOAEN;
+
+	//Set PA2 mode to alternate function mode
+	GPIOA->MODER &= ~(1U<<4);
+	GPIOA->MODER |= (1U<<5);
+	//Set PA2 alternate function type to UART_Tx(AF7)
+	GPIOA->AFR[0] |=(1U<<8); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<9);
+	GPIOA->AFR[0] |=(1U<<10);
+	GPIOA->AFR[0] &=~(1U<<11);
+
+	//Set PA3 mode to alternate function mode
+	GPIOA->MODER &=~(1U<<6);
+	GPIOA->MODER |= (1U<<7);
+	//Set PA3 alternate function type to UART_Rx(AF7)
+	GPIOA->AFR[0] |=(1U<<12); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<13);
+	GPIOA->AFR[0] |=(1U<<14);
+	GPIOA->AFR[0] &=~(1U<<15);
+	/****************************************************************************************************************/
+	/*Configure the USART module*/
+	//Enable the clock access to uart2
+	RCC->APB1ENR |= UART2EN;
+
+	//configure the UART baud rate
+	uart_set_baudrate(USART2,APB1_CLK, UART_BAUDRATE);
+
+	//configure the transfer direction
+	USART2->CR1 = (CR1_TE | CR1_RE); //here we have not use the OR operator '|' because we need everything zero and only 3rd bit to set
+
+	//Enable the RXNE Interrupt
+	USART2->CR1 |= CR1_RXNEIE;
+
+	//Enable the interrupt inside NVIC
+	NVIC_EnableIRQ(USART2_IRQn);
+
+	//Enable uart module
+	USART2->CR1 |= CR1_UE;// why | or, We've already configured the TE bit, so we simply want to add the UE bit to the current state of CR1
+
+}
+
+void uart2_tx_init(void){//
+	/*configure UART gpio pins*/
+	//Enable the clock access to GPIOD
+	RCC->AHB1ENR |= GPIOAEN;
+
+	//Set PA2 mode to alternate function mode
+	GPIOA->MODER &= ~(1U<<4);
+	GPIOA->MODER |= (1U<<5);
+	//Set PA2 alternate function type to UART_Tx(AF7)
+	GPIOA->AFR[0] |=(1U<<8); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<9);
+	GPIOA->AFR[0] |=(1U<<10);
+	GPIOA->AFR[0] &=~(1U<<11);
+
+	//Set PA3 mode to alternate function mode
+	GPIOA->MODER &= ~(1U<<6);
+	GPIOA->MODER |= (1U<<7);
+	//Set PA3 alternate function type to UART_Tx(AF7)
+	GPIOA->AFR[0] |=(1U<<12); //AFR[0] why because the all the lower value are there and ARF[1] all the higher values are there.
+	GPIOA->AFR[0] |=(1U<<13);
+	GPIOA->AFR[0] |=(1U<<14);
+	GPIOA->AFR[0] &=~(1U<<15);
+	/****************************************************************************************************************/
+	/*Configure the USART module*/
+	//Enable the clock access to uart2
+	RCC->APB1ENR |= UART2EN;
+
+	//configure the UART baud rate
+	uart_set_baudrate(USART2,APB1_CLK, UART_BAUDRATE);
+
+	//configure the transfer direction
+	USART2->CR1 = CR1_TE; //here we have not use the OR operator '|' because we need everything zero and only 3rd bit to set
+
+
+	//Enable uart module
+	USART2->CR1 |= CR1_UE;// why | or, We've already configured the TE bit, so we simply want to add the UE bit to the current state of CR1
+
+}
+
+char uart2_read(void){
+	//receive data register is empty
+	while(!(USART2->SR & SR_RXNE)){}
+	return USART2->DR;
+}
+
+void uart2_write(int ch){
+	/*Tx data register is empty.*/
+	while(!(USART2->SR & SR_TXE)){}
+	//write to tx data register
+	USART2->DR = (ch & 0xFF);
+}
+
+//this function will allow to work with any UART module
+static void uart_set_baudrate(USART_TypeDef *USARTx, uint32_t PeriphClk, uint32_t BaudRate ){
+	USARTx->BRR = compute_uart_bd(PeriphClk, BaudRate);
+}
+
+static uint16_t compute_uart_bd(uint32_t PeriphClk, uint32_t BaudRate){
+
+	return ((PeriphClk + (BaudRate/2U))/BaudRate);
+}

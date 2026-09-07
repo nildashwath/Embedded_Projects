@@ -1,0 +1,10 @@
+11:23:52 **** Incremental Build of configuration Debug for project 17_uart_tx_interrupt ****
+make -j8 all 
+arm-none-eabi-size  17_uart_tx_interrupt.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1124	      0	   1568	   2692	    a84	17_uart_tx_interrupt.elf
+Finished building: default.size.stdout
+ 
+
+11:23:52 Build Finished. 0 errors, 0 warnings. (took 76ms)
+

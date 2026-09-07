@@ -1,0 +1,18 @@
+15:58:28 **** Incremental Build of configuration Debug for project 22_SPI_adxl345 ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/adxl345.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407xx -c -I../Inc -I/home/sunbeam/Desktop/Bear_Metal/Chips_Header/CMSIS/Device/ST/STM32F4xx/Include -I/home/sunbeam/Desktop/Bear_Metal/Chips_Header/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/adxl345.d" -MT"Src/adxl345.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/adxl345.o"
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F407G_DISC1 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407xx -c -I../Inc -I/home/sunbeam/Desktop/Bear_Metal/Chips_Header/CMSIS/Device/ST/STM32F4xx/Include -I/home/sunbeam/Desktop/Bear_Metal/Chips_Header/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "22_SPI_adxl345.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/sunbeam/Desktop/Bear_Metal/22_SPI_adxl345/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="22_SPI_adxl345.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 22_SPI_adxl345.elf
+ 
+arm-none-eabi-size  22_SPI_adxl345.elf 
+arm-none-eabi-objdump -h -S 22_SPI_adxl345.elf  > "22_SPI_adxl345.list"
+   text	   data	    bss	    dec	    hex	filename
+   3228	      0	   1608	   4836	   12e4	22_SPI_adxl345.elf
+Finished building: default.size.stdout
+ 
+Finished building: 22_SPI_adxl345.list
+ 
+
+15:58:28 Build Finished. 0 errors, 0 warnings. (took 218ms)
+

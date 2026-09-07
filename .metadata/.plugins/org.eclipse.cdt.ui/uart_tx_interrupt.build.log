@@ -1,0 +1,10 @@
+17:40:54 **** Build of configuration Debug for project uart_tx_interrupt ****
+make -j8 all 
+arm-none-eabi-size  uart_tx_interrupt.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1124	      0	   1568	   2692	    a84	uart_tx_interrupt.elf
+Finished building: default.size.stdout
+ 
+
+17:40:54 Build Finished. 0 errors, 0 warnings. (took 70ms)
+

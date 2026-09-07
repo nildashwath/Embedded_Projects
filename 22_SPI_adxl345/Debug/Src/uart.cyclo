@@ -1,0 +1,10 @@
+/home/sunbeam/Desktop/Bear_Metal/Chips_Header/CMSIS/Include/core_cm4.h:1684:22:__NVIC_EnableIRQ	2
+../Src/uart.c:37:5:__io_putchar	1
+../Src/uart.c:44:6:dma1_stream6_init	2
+../Src/uart.c:86:6:uart2_rxtx_init	1
+../Src/uart.c:125:6:uart2_rx_interrupt_init	1
+../Src/uart.c:169:6:uart2_tx_init	1
+../Src/uart.c:208:6:uart2_read	2
+../Src/uart.c:214:6:uart2_write	2
+../Src/uart.c:222:13:uart_set_baudrate	1
+../Src/uart.c:226:17:compute_uart_bd	1

@@ -1,0 +1,6 @@
+1766312039894	Delete resource 'usart_test'
+1766317530210	Delete resource 'usart_test'
+1766425249561	Delete resource '10_adc_continuous_conversion_mode'
+1766425305214	Rename resource '10_adc_continuous_conversion_mode2'
+1766642146588	Rename resource '17_uart_tx_interrupt'
+1766834331028	Rename resource '13_Timer_Interrupt'

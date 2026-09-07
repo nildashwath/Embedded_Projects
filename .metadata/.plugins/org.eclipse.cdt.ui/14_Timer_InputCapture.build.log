@@ -1,0 +1,10 @@
+17:40:52 **** Build of configuration Debug for project 14_Timer_InputCapture ****
+make -j8 all 
+arm-none-eabi-size  14_Timer_InputCapture.elf 
+   text	   data	    bss	    dec	    hex	filename
+    960	      0	   1568	   2528	    9e0	14_Timer_InputCapture.elf
+Finished building: default.size.stdout
+ 
+
+17:40:52 Build Finished. 0 errors, 0 warnings. (took 70ms)
+

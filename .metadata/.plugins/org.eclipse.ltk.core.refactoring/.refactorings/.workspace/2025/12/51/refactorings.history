@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;13_OutputCompare&apos; to &apos;13_Timer_OutputCompare&apos;" description="Rename resource &apos;13_OutputCompare&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/13_OutputCompare" name="13_Timer_OutputCompare" stamp="1765714989311" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;13_Timer_InputCapture&apos; to &apos;14_Timer_InputCapture&apos;" description="Rename resource &apos;13_Timer_InputCapture&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/13_Timer_InputCapture" name="14_Timer_InputCapture" stamp="1765777282819" updateReferences="true"/>
+</session>

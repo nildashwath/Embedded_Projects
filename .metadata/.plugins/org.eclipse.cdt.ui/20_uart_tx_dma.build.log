@@ -1,0 +1,10 @@
+11:55:19 **** Build of configuration Debug for project 20_uart_tx_dma ****
+make -j8 all 
+arm-none-eabi-size  20_uart_tx_dma.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1444	      0	   1568	   3012	    bc4	20_uart_tx_dma.elf
+Finished building: default.size.stdout
+ 
+
+11:55:19 Build Finished. 0 errors, 0 warnings. (took 141ms)
+
